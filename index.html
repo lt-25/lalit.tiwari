@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lalit Tiwari | Laravel Developer Portfolio</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style>
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-purple: #9d4edd;
+            --glass-bg: rgba(20, 20, 25, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-purple);
+        }
+
+        /* Glassmorphism Classes */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .glass-card {
+            background: linear-gradient(145deg, rgba(30, 30, 35, 0.6) 0%, rgba(15, 15, 20, 0.6) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--neon-cyan);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--neon-purple);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        /* Text Gradients */
+        .text-gradient {
+            background: linear-gradient(to right, var(--neon-purple), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .text-gradient-2 {
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050505;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .loader-ring {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border-top-color: var(--neon-cyan);
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Timeline */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 10px var(--neon-cyan);
+            border: 3px solid #050505;
+        }
+        
+        /* Blob Backgrounds */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.3;
+            animation: float 10s infinite alternate;
+            border-radius: 50%;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-20px) scale(1.1); }
+        }
+        
+        /* ThreeJS Container */
+        #webgl-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--neon-cyan);
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Mobile specific hiding for cursor */
+        @media (max-width: 768px) {
+            .cursor-dot, .cursor-outline {
+                display: none;
+            }
+            body {
+                cursor: auto;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-ring"></div>
+        <p class="mt-4 text-gray-400 font-space tracking-widest text-sm uppercase">Loading Experience</p>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Background Blobs -->
+    <div class="blob bg-purple-700/40 w-96 h-96 top-0 left-0"></div>
+    <div class="blob bg-cyan-700/30 w-80 h-80 bottom-0 right-0"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-6 lg:px-12 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-tighter text-white z-50">
+                Lalit<span class="text-gradient">.</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8 glass px-8 py-3 rounded-full">
+                <a href="#home" class="nav-link text-sm font-medium hover:text-white transition-colors text-gray-300">Home</a>
+                <a href="#about" class="nav-link text-sm font-medium hover:text-white transition-colors text-gray-300">About</a>
+                <a href="#skills" class="nav-link text-sm font-medium hover:text-white transition-colors text-gray-300">Skills</a>
+                <a href="#projects" class="nav-link text-sm font-medium hover:text-white transition-colors text-gray-300">Projects</a>
+                <a href="#experience" class="nav-link text-sm font-medium hover:text-white transition-colors text-gray-300">Experience</a>
+                <a href="#contact" class="nav-link text-sm font-medium hover:text-white transition-colors text-gray-300">Contact</a>
+            </div>
+
+            <div class="hidden md:block z-50">
+                <a href="#contact" class="px-6 py-2.5 rounded-full border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all duration-300 text-sm font-semibold btn-glow">
+                    Hire Me
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white z-50 text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-xl flex flex-col justify-center items-center space-y-8 transform translate-x-full transition-transform duration-300 z-40">
+            <a href="#home" class="mobile-link text-2xl font-medium text-gray-300 hover:text-cyan-400">Home</a>
+            <a href="#about" class="mobile-link text-2xl font-medium text-gray-300 hover:text-cyan-400">About</a>
+            <a href="#skills" class="mobile-link text-2xl font-medium text-gray-300 hover:text-cyan-400">Skills</a>
+            <a href="#projects" class="mobile-link text-2xl font-medium text-gray-300 hover:text-cyan-400">Projects</a>
+            <a href="#experience" class="mobile-link text-2xl font-medium text-gray-300 hover:text-cyan-400">Experience</a>
+            <a href="#contact" class="mobile-link text-2xl font-medium text-gray-300 hover:text-cyan-400">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20">
+        <!-- ThreeJS Background -->
+        <div id="webgl-container"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div data-aos="fade-up" data-aos-duration="1000">
+                <div class="inline-block px-4 py-1.5 rounded-full glass border border-purple-500/30 text-purple-400 text-sm font-medium mb-6">
+                    <i class="fa-solid fa-code mr-2"></i> Software Engineer
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
+                    Full Stack <br/>
+                    <span class="text-gradient">Laravel Developer</span>
+                </h1>
+                
+                <div class="text-xl md:text-2xl text-gray-400 mb-10 h-8">
+                    <span class="typed-text"></span>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                    <a href="mailto:ltiwari939@gmail.com" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold hover:shadow-[0_0_20px_rgba(157,78,221,0.5)] transition-all duration-300">
+                        Hire Me Now <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="Lalit_Tiwari_Resume.pdf" class="w-full sm:w-auto px-8 py-3.5 rounded-full glass border border-gray-600 text-white font-semibold hover:bg-white/10 transition-all duration-300 group" download>
+                        Download Resume <i class="fa-solid fa-download ml-2 group-hover:-translate-y-1 transition-transform"></i>
+                    </a>
+                </div>
+                
+                <div class="flex justify-center gap-6">
+                    <a href="https://github.com/lt-25" target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center text-xl hover:text-cyan-400 hover:border-cyan-400 transition-all duration-300 magnetic-element">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/lalit-tiwari-6b0201112/" target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center text-xl hover:text-cyan-400 hover:border-cyan-400 transition-all duration-300 magnetic-element">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a href="mailto:ltiwari939@gmail.com" class="w-12 h-12 rounded-full glass flex items-center justify-center text-xl hover:text-cyan-400 hover:border-cyan-400 transition-all duration-300 magnetic-element">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-50">
+            <span class="text-xs tracking-widest uppercase mb-2">Scroll</span>
+            <i class="fa-solid fa-arrow-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- About Text -->
+                <div data-aos="fade-right">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Building <span class="text-gradient">Robust Backend</span> Architectures</h2>
+                    <p class="text-gray-400 mb-6 text-lg leading-relaxed">
+                        I am a highly skilled Backend-focused Software Engineer with <strong class="text-white">7+ years of experience</strong> specializing in Laravel and Livewire ecosystems. My passion lies in solving complex problems, building scalable APIs, and integrating cutting-edge technologies.
+                    </p>
+                    <p class="text-gray-400 mb-8 text-lg leading-relaxed">
+                        With extensive experience in Firebase, real-time WebSockets, payment gateways, and modern AI tool integrations, I deliver world-class solutions tailored to business needs. I am a fast learner, remote-work friendly, and constantly evolving with the tech landscape.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-card p-4 rounded-xl flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl">
+                                <i class="fa-solid fa-rocket"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-xl">7+ Years</h4>
+                                <p class="text-sm text-gray-400">Experience</p>
+                            </div>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xl">
+                                <i class="fa-solid fa-check-double"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-xl">20+</h4>
+                                <p class="text-sm text-gray-400">Projects Done</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- About Visual/Cards -->
+                <div class="relative" data-aos="fade-left">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-purple-600/20 to-cyan-600/20 blur-3xl rounded-full"></div>
+                    <div class="grid grid-cols-2 gap-6 relative z-10">
+                        <div class="glass-card p-6 rounded-2xl transform translate-y-8 tilt-card">
+                            <i class="fa-solid fa-server text-3xl text-purple-400 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">Backend Pro</h3>
+                            <p class="text-sm text-gray-400">Scalable architectures and optimized database structures.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl tilt-card">
+                            <i class="fa-brands fa-laravel text-3xl text-red-500 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">Laravel Expert</h3>
+                            <p class="text-sm text-gray-400">Mastery in Livewire, Eloquent, Queues, and Jobs.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl transform translate-y-8 tilt-card">
+                            <i class="fa-solid fa-robot text-3xl text-cyan-400 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">AI Integrations</h3>
+                            <p class="text-sm text-gray-400">Connecting LLMs and intelligent APIs to web apps.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl tilt-card">
+                            <i class="fa-solid fa-network-wired text-3xl text-green-400 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">RESTful APIs</h3>
+                            <p class="text-sm text-gray-400">Secure, fast, and documented API development.</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 relative bg-black/50 border-y border-white/5">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Technical <span class="text-gradient">Arsenal</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Tools and technologies I use to build robust, scalable, and high-performance applications.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <!-- Skill items generated dynamically via JS later, but structured here for SEO/Fallback -->
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="50">
+                    <i class="fa-brands fa-php text-4xl text-[#777BB4] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">PHP</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="100">
+                    <i class="fa-brands fa-laravel text-4xl text-[#FF2D20] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">Laravel</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="150">
+                    <i class="fa-solid fa-bolt text-4xl text-[#fb7185] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">Livewire</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fa-solid fa-database text-4xl text-[#4479A1] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">MySQL</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="250">
+                    <i class="fa-solid fa-fire text-4xl text-[#FFCA28] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">Firebase</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="300">
+                    <i class="fa-brands fa-js text-4xl text-[#F7DF1E] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">JavaScript</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="350">
+                    <span class="text-4xl text-[#0769AD] font-bold mb-3 group-hover:scale-110 transition-transform">jQ</span>
+                    <h4 class="font-semibold">jQuery</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="400">
+                    <i class="fa-solid fa-plug text-4xl text-green-400 mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">REST APIs</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="450">
+                    <i class="fa-brands fa-linux text-4xl text-white mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">Linux</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="500">
+                    <i class="fa-brands fa-git-alt text-4xl text-[#F05032] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">Git</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="550">
+                    <i class="fa-solid fa-wind text-4xl text-[#38B2AC] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">TailwindCSS</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="600">
+                    <i class="fa-solid fa-credit-card text-4xl text-[#6366F1] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">Payments</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="650">
+                    <i class="fa-solid fa-layer-group text-4xl text-[#8B5CF6] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">Queue/Jobs</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="700">
+                    <i class="fa-solid fa-tower-broadcast text-4xl text-[#EC4899] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">WebSockets</h4>
+                </div>
+                <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center group hover:bg-white/5" data-aos="zoom-in" data-aos-delay="750">
+                    <i class="fa-solid fa-brain text-4xl text-[#14B8A6] mb-3 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-semibold">AI Tooling</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 relative">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16" data-aos="fade-up">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Featured <span class="text-gradient">Projects</span></h2>
+                    <p class="text-gray-400 max-w-2xl text-lg">Real-world systems, SaaS platforms, and enterprise solutions I have built.</p>
+                </div>
+                <a href="https://github.com" target="_blank" class="hidden md:inline-flex items-center gap-2 text-cyan-400 hover:text-white transition-colors border-b border-cyan-400/30 pb-1 pb-1">
+                    View All on GitHub <i class="fa-solid fa-arrow-right text-sm"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden group tilt-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative overflow-hidden h-56">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#141419] to-transparent z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Starstell" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 z-20 flex gap-2">
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">Laravel</span>
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">Pusher</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-20">
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Starstell.com</h3>
+                        <p class="text-gray-400 text-sm mb-6 line-clamp-2">Astrology services platform with REST APIs, payment gateways, and Firebase/Pusher for real-time features.</p>
+                        <div class="flex items-center justify-between">
+                            <a href="https://starstell.com" target="_blank" class="text-sm font-semibold text-white hover:text-cyan-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-link mr-1"></i> Live Website </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden group tilt-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative overflow-hidden h-56">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#141419] to-transparent z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cosmic Compass Pro" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 z-20 flex gap-2">
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">API</span>
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">Backend</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-20">
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Cosmic Compass Pro</h3>
+                        <p class="text-gray-400 text-sm mb-6 line-clamp-2">Advanced computational backend for precise cosmic mapping and personalized data analysis via scalable APIs.</p>
+                        <div class="flex items-center justify-end">
+                            <a href="https://github.com/lt-25/cosmic-compass-pro" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors text-white hover:text-cyan-400" title="View Source"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="glass-card rounded-2xl overflow-hidden group tilt-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative overflow-hidden h-56">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#141419] to-transparent z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Passport OCR API" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 z-20 flex gap-2">
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">OCR</span>
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">Laravel</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-20">
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Passport OCR API</h3>
+                        <p class="text-gray-400 text-sm mb-6 line-clamp-2">High-accuracy OCR API service engineered to instantly extract and process passport MRZ data securely.</p>
+                        <div class="flex items-center justify-end">
+                            <a href="https://github.com/lt-25/passport-ocr-api" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors text-white hover:text-cyan-400" title="View Source"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="glass-card rounded-2xl overflow-hidden group tilt-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative overflow-hidden h-56">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#141419] to-transparent z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Geocode" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 z-20 flex gap-2">
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">Geocoding</span>
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">Maps API</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-20">
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Geocode Utility</h3>
+                        <p class="text-gray-400 text-sm mb-6 line-clamp-2">A robust backend module dedicated to converting addresses into highly accurate geographical coordinates and vice-versa.</p>
+                        <div class="flex items-center justify-end">
+                            <a href="https://github.com/lt-25/geocode" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-white/10 transition-colors text-white hover:text-cyan-400" title="View Source"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="glass-card rounded-2xl overflow-hidden group tilt-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative overflow-hidden h-56">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#141419] to-transparent z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Videshibhai Jobportal" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 z-20 flex gap-2">
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">Livewire</span>
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">Filament</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-20">
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Videshibhai Jobportal APP</h3>
+                        <p class="text-gray-400 text-sm mb-6 line-clamp-2">Complete backend with REST APIs in Laravel and a sophisticated admin panel utilizing Filament and Livewire.</p>
+                        <div class="flex items-center justify-between">
+                            <a href="https://play.google.com/store/apps/details?id=com.videshibhaiapp&hl=en_IN" target="_blank" class="text-sm font-semibold text-white hover:text-cyan-400 transition-colors flex items-center gap-2"><i class="fa-brands fa-google-play mr-1"></i> Play Store </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="glass-card rounded-2xl overflow-hidden group tilt-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative overflow-hidden h-56">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#141419] to-transparent z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Trakbond" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 z-20 flex gap-2">
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">IoT SaaS</span>
+                            <span class="px-3 py-1 text-xs font-semibold bg-black/50 backdrop-blur-md rounded-full border border-white/10">Backend</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative z-20">
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Trakbond.com</h3>
+                        <p class="text-gray-400 text-sm mb-6 line-clamp-2">A highly robust IoT and tracking solutions platform handling real-time geospatial data tracking and analytics.</p>
+                        <div class="flex items-center justify-between">
+                            <a href="https://trakbond.com" target="_blank" class="text-sm font-semibold text-white hover:text-cyan-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-link mr-1"></i> Live Website </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Timeline -->
+    <section id="experience" class="py-24 relative bg-black/50 border-y border-white/5">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Professional <span class="text-gradient">Journey</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">A track record of delivering high-quality software solutions and scaling backend architectures.</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto relative pl-8 md:pl-0 border-l-2 md:border-l-0 border-cyan-500/30">
+                <!-- Center Line for Desktop -->
+                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-[2px] bg-gradient-to-b from-cyan-500/50 via-purple-500/50 to-transparent"></div>
+
+                <!-- Item 1 -->
+                <div class="relative md:flex justify-between items-center w-full mb-12" data-aos="fade-up">
+                    <div class="md:w-5/12 mb-4 md:mb-0 text-left md:text-right pr-0 md:pr-10">
+                        <h3 class="text-2xl font-bold text-white mb-1">Senior Laravel Developer</h3>
+                        <p class="text-cyan-400 font-semibold mb-2">Happy StarsTell.Com Pvt Ltd.</p>
+                        <p class="text-sm text-gray-500">2023 - Present</p>
+                    </div>
+                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-5 h-5 bg-black border-4 border-cyan-400 rounded-full z-10 shadow-[0_0_15px_#00f3ff]"></div>
+                    <!-- Mobile Dot -->
+                    <div class="md:hidden absolute -left-[41px] top-1 w-5 h-5 bg-black border-4 border-cyan-400 rounded-full z-10 shadow-[0_0_15px_#00f3ff]"></div>
+                    <div class="md:w-5/12 glass-card p-6 rounded-xl text-left">
+                        <p class="text-gray-400 text-sm leading-relaxed">Developed and optimized large-scale Laravel applications (wallet system, astrology services, call/chat), Implemented queues, events, and job processing for scalable operations Worked with Firebase, Ably & Pusher WebSockets for real-time chat & notifications, Integrated multiple payment gateways: Razorpay, Paytm, PayPal, Built admin features Designed REST APIs and improved database performance using MySQL indexing & optimization</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="relative md:flex justify-between items-center w-full mb-12 md:flex-row-reverse" data-aos="fade-up">
+                    <div class="md:w-5/12 mb-4 md:mb-0 text-left pl-0 md:pl-10">
+                        <h3 class="text-2xl font-bold text-white mb-1">Full Stack Web Developer</h3>
+                        <p class="text-purple-400 font-semibold mb-2">World Phone IT Services.</p>
+                        <p class="text-sm text-gray-500">2020 - 2023</p>
+                    </div>
+                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-5 h-5 bg-black border-4 border-purple-500 rounded-full z-10 shadow-[0_0_15px_#9d4edd]"></div>
+                    <!-- Mobile Dot -->
+                    <div class="md:hidden absolute -left-[41px] top-1 w-5 h-5 bg-black border-4 border-purple-500 rounded-full z-10 shadow-[0_0_15px_#9d4edd]"></div>
+                    <div class="md:w-5/12 glass-card p-6 rounded-xl text-left md:text-right">
+                        <p class="text-gray-400 text-sm leading-relaxed">Developed complex web applications, dynamic form builders, and CRM modules. Worked on Laravel-based CRM & enterprise applications, Implemented third-party integrations and optimized backend architecture.</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="relative md:flex justify-between items-center w-full" data-aos="fade-up">
+                    <div class="md:w-5/12 mb-4 md:mb-0 text-left md:text-right pr-0 md:pr-10">
+                        <h3 class="text-2xl font-bold text-white mb-1">Sr. Software Engineer</h3>
+                        <p class="text-cyan-400 font-semibold mb-2">Velocis System Pvt Ltd.</p>
+                        <p class="text-sm text-gray-500">2019 - 2020</p>
+                    </div>
+                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-5 h-5 bg-black border-4 border-cyan-400 rounded-full z-10 shadow-[0_0_15px_#00f3ff]"></div>
+                    <!-- Mobile Dot -->
+                    <div class="md:hidden absolute -left-[41px] top-1 w-5 h-5 bg-black border-4 border-cyan-400 rounded-full z-10 shadow-[0_0_15px_#00f3ff]"></div>
+                    <div class="md:w-5/12 glass-card p-6 rounded-xl text-left">
+                        <p class="text-gray-400 text-sm leading-relaxed">Started journey with PHP and MySQL. Sr. Programmer Level 1, Designing, coding and debugging websites and customization of existing websites, primarily using PHP, Codegniter and MySQL.</p>
+                    </div>
+                </div>
+                <!-- Item 4 -->
+                 <div class="relative md:flex justify-between items-center w-full mb-12 md:flex-row-reverse" data-aos="fade-up">
+                    <div class="md:w-5/12 mb-4 md:mb-0 text-left pl-0 md:pl-10">
+                        <h3 class="text-2xl font-bold text-white mb-1">PHP Developer</h3>
+                        <p class="text-purple-400 font-semibold mb-2">TrakBond.</p>
+                        <p class="text-sm text-gray-500">2018 - 2019</p>
+                    </div>
+                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-5 h-5 bg-black border-4 border-purple-500 rounded-full z-10 shadow-[0_0_15px_#9d4edd]"></div>
+                    <!-- Mobile Dot -->
+                    <div class="md:hidden absolute -left-[41px] top-1 w-5 h-5 bg-black border-4 border-purple-500 rounded-full z-10 shadow-[0_0_15px_#9d4edd]"></div>
+                    <div class="md:w-5/12 glass-card p-6 rounded-xl text-left md:text-right">
+                        <p class="text-gray-400 text-sm leading-relaxed">Designing, coding and debugging websites and customization of existing websites, primarily using PHP, codegniter and MySQL. - Management and maintenance of websites, including software updates (e.g. WordPress).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">What I <span class="text-gradient">Deliver</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Comprehensive backend and full-stack solutions tailored for modern businesses.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-400 text-2xl mb-6 group-hover:bg-purple-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Laravel Backend</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Robust server-side logic, optimized database queries, Eloquent ORM mastery, and secure authentication systems.</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 bg-cyan-500/10 rounded-xl flex items-center justify-center text-cyan-400 text-2xl mb-6 group-hover:bg-cyan-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">API Development</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Creating and consuming RESTful APIs. Seamless third-party integrations including payment gateways and social platforms.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 text-2xl mb-6 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-cloud"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">SaaS Applications</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">End-to-end multi-tenant application development. Subscription handling, role management, and performance scaling.</p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-14 h-14 bg-pink-500/10 rounded-xl flex items-center justify-center text-pink-400 text-2xl mb-6 group-hover:bg-pink-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">AI Integrations</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Connecting standard applications with powerful LLMs (OpenAI, Anthropic) to automate workflows and add smart features.</p>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-14 h-14 bg-yellow-500/10 rounded-xl flex items-center justify-center text-yellow-400 text-2xl mb-6 group-hover:bg-yellow-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-table-columns"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Custom Admin Panels</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Dynamic dashboards, CMS modules, complex form builders, and reporting tools customized to specific business needs.</p>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="600">
+                    <div class="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center text-green-400 text-2xl mb-6 group-hover:bg-green-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Full Stack Solutions</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Bridging Livewire, TailwindCSS, and Javascript with Laravel core to produce highly interactive, SPA-like experiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative bg-black/50 border-t border-white/5">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Let's Build Something <span class="text-gradient">Extraordinary</span></h2>
+                <p class="text-gray-400 mb-12 text-lg">Looking for a dedicated backend engineer to scale your next project? My inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                    <!-- Email -->
+                    <a href="mailto:ltiwari939@gmail.com" class="flex flex-col items-center gap-4 group p-8 glass-card rounded-2xl w-full md:w-1/3 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="w-16 h-16 bg-black/50 rounded-full flex items-center justify-center text-cyan-400 text-2xl border border-white/10 shadow-[0_0_15px_rgba(0,243,255,0.2)]">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Email Me</p>
+                            <p class="text-white font-medium text-lg">ltiwari939@gmail.com</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Phone / WhatsApp -->
+                    <a href="https://wa.me/917275123469" target="_blank" class="flex flex-col items-center gap-4 group p-8 glass-card rounded-2xl w-full md:w-1/3 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="w-16 h-16 bg-black/50 rounded-full flex items-center justify-center text-green-500 text-2xl border border-white/10 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Call / WhatsApp</p>
+                            <p class="text-white font-medium text-lg">+91-7275123469</p>
+                        </div>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/lalit-tiwari-6b0201112/" target="_blank" class="flex flex-col items-center gap-4 group p-8 glass-card rounded-2xl w-full md:w-1/3 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="w-16 h-16 bg-black/50 rounded-full flex items-center justify-center text-blue-500 text-2xl border border-white/10 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Connect</p>
+                            <p class="text-white font-medium text-lg">Lalit Tiwari</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-white/5 relative bg-[#030303]">
+        <div class="container mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0 text-center md:text-left">
+                <a href="#" class="text-2xl font-bold tracking-tighter text-white">
+                    Lalit<span class="text-gradient">.</span>
+                </a>
+                <p class="text-gray-500 text-sm mt-2">© 2026 Lalit Tiwari. All rights reserved.</p>
+            </div>
+            
+            <div class="flex items-center space-x-6 mb-4 md:mb-0">
+                <a href="#home" class="text-gray-500 hover:text-cyan-400 text-sm transition-colors">Home</a>
+                <a href="#about" class="text-gray-500 hover:text-cyan-400 text-sm transition-colors">About</a>
+                <a href="#projects" class="text-gray-500 hover:text-cyan-400 text-sm transition-colors">Projects</a>
+            </div>
+
+            <a href="#home" class="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(0,243,255,0.3)] transition-all duration-300">
+                <i class="fa-solid fa-arrow-up"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+
+    <script>
+        // --- 1. Preloader ---
+        $(window).on('load', function() {
+            gsap.to('#preloader', {
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    $('#preloader').css('display', 'none');
+                    // Trigger AOS after load
+                    AOS.init({
+                        duration: 800,
+                        easing: 'ease-out-cubic',
+                        once: true,
+                        offset: 50
+                    });
+                }
+            });
+        });
+
+        // --- 2. Custom Cursor ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        // Hide cursor on touch devices natively using CSS mostly, but prevent errors here
+        if (window.matchMedia("(pointer: fine)").matches) {
+            window.addEventListener('mousemove', function(e) {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                
+                // Slight delay for the outline using animate for smoothness
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 500, fill: "forwards" });
+            });
+            
+            // Hover effect on links and buttons
+            const magneticElements = document.querySelectorAll('a, button, .tilt-card');
+            magneticElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorOutline.style.width = '60px';
+                    cursorOutline.style.height = '60px';
+                    cursorOutline.style.backgroundColor = 'rgba(157, 78, 221, 0.1)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorOutline.style.width = '40px';
+                    cursorOutline.style.height = '40px';
+                    cursorOutline.style.backgroundColor = 'transparent';
+                });
+            });
+        }
+
+        // --- 3. Typed.js Setup ---
+        const typed = new Typed('.typed-text', {
+            strings: [
+                'Laravel Developer.', 
+                'Livewire Expert.', 
+                'API Architect.', 
+                'Firebase Integrator.', 
+                'AI Tools Enthusiast.'
+            ],
+            typeSpeed: 50,
+            backSpeed: 30,
+            backDelay: 2000,
+            loop: true,
+            cursorChar: '|',
+            autoInsertCss: true
+        });
+
+        // --- 4. Navbar Sticky & Mobile Menu ---
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 50) {
+                $('#navbar').addClass('glass py-2').removeClass('py-4');
+            } else {
+                $('#navbar').removeClass('glass py-2').addClass('py-4');
+            }
+            
+            // Active Link Highlighting
+            let scrollDistance = $(window).scrollTop();
+            $('section').each(function(i) {
+                if ($(this).position().top <= scrollDistance + 100) {
+                    $('.nav-link').removeClass('active');
+                    $('.nav-link').eq(i).addClass('active');
+                }
+            });
+        });
+
+        $('#mobile-menu-btn').click(function() {
+            $('#mobile-menu').toggleClass('translate-x-full');
+            $(this).find('i').toggleClass('fa-bars fa-times');
+        });
+
+        $('.mobile-link').click(function() {
+            $('#mobile-menu').addClass('translate-x-full');
+            $('#mobile-menu-btn i').removeClass('fa-times').addClass('fa-bars');
+        });
+
+        // --- 5. Vanilla Tilt for Cards ---
+        VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.1,
+            scale: 1.02
+        });
+
+        // --- 6. Three.js Animated Background (Premium Silicon Valley Style) ---
+        const initThreeJS = () => {
+            const container = document.getElementById('webgl-container');
+            if(!container) return;
+
+            const scene = new THREE.Scene();
+            
+            // Camera
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Create Particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 700;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for(let i = 0; i < particlesCount * 3; i++) {
+                // Spread particles across a wide area
+                posArray[i] = (Math.random() - 0.5) * 100;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            // Glowing cyan/purple material
+            const material = new THREE.PointsMaterial({
+                size: 0.15,
+                color: 0x00f3ff,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, material);
+            scene.add(particlesMesh);
+
+            // Add a subtle Torus Knot (Wireframe) rotating slowly in background
+            const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+            const wireframeMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x9d4edd, 
+                wireframe: true,
+                transparent: true,
+                opacity: 0.05
+            });
+            const torusKnot = new THREE.Mesh(geometry, wireframeMaterial);
+            torusKnot.position.set(0, 0, -15);
+            scene.add(torusKnot);
+
+            // Mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            document.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX / window.innerWidth - 0.5;
+                mouseY = event.clientY / window.innerHeight - 0.5;
+            });
+
+            // Animation Loop
+            const clock = new THREE.Clock();
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                const elapsedTime = clock.getElapsedTime();
+
+                // Rotate particles slowly
+                particlesMesh.rotation.y = elapsedTime * 0.05;
+                particlesMesh.rotation.x = elapsedTime * 0.02;
+                
+                // Parallax effect based on mouse
+                particlesMesh.position.x += (mouseX * 5 - particlesMesh.position.x) * 0.05;
+                particlesMesh.position.y += (-mouseY * 5 - particlesMesh.position.y) * 0.05;
+
+                // Rotate TorusKnot
+                torusKnot.rotation.x += 0.005;
+                torusKnot.rotation.y += 0.005;
+
+                renderer.render(scene, camera);
+            };
+            
+            animate();
+
+            // Resize handling
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+
+        // Initialize ThreeJS
+        initThreeJS();
+    </script>
+</body>
+</html>
